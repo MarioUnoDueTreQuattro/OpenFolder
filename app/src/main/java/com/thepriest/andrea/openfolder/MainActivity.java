@@ -76,6 +76,10 @@ public class MainActivity extends ActionBarActivity {
             // Handle other intents, such as being started from the home screen
         }}
 
+    /**
+     *
+      * @param intent
+     */
     void handleSendText(Intent intent) {
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (sharedText != null) {
