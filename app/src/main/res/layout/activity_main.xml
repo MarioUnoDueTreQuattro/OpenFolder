@@ -1,0 +1,101 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                tools:context=".MainActivity">
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:rowCount="67"
+        android:columnCount="10"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="This app can open folders in &quot;ES File Explorer&quot; via &quot;Share&quot;, you can share text containing folder paths."
+            android:id="@+id/textView"
+            android:layout_column="0"
+            android:layout_row="1"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Folder to open:"
+            android:id="@+id/folderTextView"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textStyle="bold"
+            android:textSize="@dimen/abc_text_size_large_material"
+            android:layout_row="41"
+            android:layout_column="0"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:text="/"
+                android:id="@+id/folderTextView2"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_column="0"
+                android:editable="true"
+                android:enabled="true"
+                android:focusable="true"
+                android:clickable="true"
+                android:layout_row="42"
+                android:singleLine="true"
+                android:autoText="false"
+                android:elegantTextHeight="false"
+                android:layout_gravity="center|left"
+                android:layout_weight="3"/>
+
+            <Button
+                style="@style/ButtonTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Clear"
+                android:id="@+id/buttonClear"
+                android:layout_row="42"
+                android:layout_column="1"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <Button
+            style="@style/ButtonTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Open folder..."
+            android:id="@+id/buttonOpenFolder"
+            android:layout_column="0"
+            android:layout_row="44"/>
+
+        <Button
+            style="@style/BigButtonTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Exit"
+            android:id="@+id/buttonExit"
+            android:layout_column="0"
+            android:layout_row="66"/>
+
+    </GridLayout>
+</RelativeLayout>
