@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -171,7 +172,23 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void deleteFolder() {
-
+        String string = folderTextView2.getText().toString();
+        ArrayAdapter<String> dataAdapter;
+        SpinnerAdapter spinAdapter = spinnerSaved.getAdapter();
+        dataAdapter= ((ArrayAdapter<String>) spinAdapter);
+        dataAdapter.remove(string);
+        String filename = "/data/data/com.thepriest.andrea.openfolder/files/savedFolders.txt";
+        string = folderTextView2.getText().toString();
+        //if (string.length()==0) return;
+        try {
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filename)));
+            for (int i=0; i< dataAdapter.getCount();i++) {
+                out.println(dataAdapter.getItem(i));
+            }
+            out.close();
+        } catch (IOException e) {
+            //exception handling left as an exercise for the reader
+        }
     }
 
     private void saveFolder() {
