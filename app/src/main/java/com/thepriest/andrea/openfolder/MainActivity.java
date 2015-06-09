@@ -105,7 +105,16 @@ public class MainActivity extends ActionBarActivity {
             }
         });
         spinnerSaved = (Spinner) findViewById(R.id.spinnerSaved);
-       // spinnerSaved.setOnTouchListener(Spinner_OnTouch);
+        //spinnerSaved.setOnTouchListener(Spinner_OnTouch);
+/*
+        spinnerSaved.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "onItemClick()");
+            }
+        });
+*/
         spinnerSaved.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -159,7 +168,7 @@ public class MainActivity extends ActionBarActivity {
             if (event.getAction() == MotionEvent.ACTION_UP) {
                //TODO
                 Log.d(TAG,"OnTouchListener");
-               this.onTouch(v,event);
+               this.onTouch(v, event);
             }
             return true;
         }
