@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -104,6 +105,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
         spinnerSaved = (Spinner) findViewById(R.id.spinnerSaved);
+       // spinnerSaved.setOnTouchListener(Spinner_OnTouch);
         spinnerSaved.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -111,6 +113,23 @@ public class MainActivity extends ActionBarActivity {
                                        int arg2, long arg3) {
                 folderTextView2 = (TextView) findViewById(R.id.folderTextView2);
                 folderTextView2.setText(arg0.getItemAtPosition(arg2).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                Log.d(TAG, "onNothingSelected()");
+
+            }
+        });
+        spinnerRecent = (Spinner) findViewById(R.id.spinnerRecent);
+        spinnerRecent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+                folderTextView2 = (TextView) findViewById(R.id.folderTextView2);
+                folderTextView2.setText(arg0.getItemAtPosition(arg2).toString());
+                Log.d(TAG, "onItemSelected()");
             }
 
             @Override
@@ -135,6 +154,16 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    private View.OnTouchListener Spinner_OnTouch = new View.OnTouchListener() {
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+               //TODO
+                Log.d(TAG,"OnTouchListener");
+               this.onTouch(v,event);
+            }
+            return true;
+        }
+    };
     private boolean savedFoldersExists() {
         return new File("/data/data/com.thepriest.andrea.openfolder/files/savedFolders.txt").exists();
     }
@@ -162,8 +191,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
 
-        ArrayAdapter adapter = new ArrayAdapter(this,
-                android.R.layout.simple_spinner_item, str);
+        ArrayAdapter adapter = new ArrayAdapter(this,                android.R.layout.simple_spinner_item, str);
 
         spinnerSaved.setAdapter(adapter);
         folderTextView2.setText(sCurPath);
