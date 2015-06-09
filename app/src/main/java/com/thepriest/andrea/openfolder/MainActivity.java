@@ -1,40 +1,44 @@
 package com.thepriest.andrea.openfolder;
 
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Message;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Xml;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.xmlpull.v1.XmlSerializer;
-
-import java.io.StringWriter;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.Vector;
 
 
 public class MainActivity extends ActionBarActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
     TextView folderTextView2;
     Button buttonOpenFolder;
     Button buttonExit;
     Button buttonClear;
-    Spinner spinnerSaved,spinnerRecent;
-    Button buttonSave,buttonDelete;
+    Spinner spinnerSaved, spinnerRecent;
+    Button buttonSave, buttonDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        folderTextView2= (TextView) findViewById(R.id.folderTextView2);
-        buttonOpenFolder= (Button) findViewById(R.id.buttonOpenFolder);
+        folderTextView2 = (TextView) findViewById(R.id.folderTextView2);
+        buttonOpenFolder = (Button) findViewById(R.id.buttonOpenFolder);
         buttonOpenFolder.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -55,7 +59,7 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
-        buttonClear= (Button) findViewById(R.id.buttonClear);
+        buttonClear = (Button) findViewById(R.id.buttonClear);
         buttonClear.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -64,27 +68,26 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
-        buttonExit= (Button) findViewById(R.id.buttonExit);
+        buttonExit = (Button) findViewById(R.id.buttonExit);
         buttonExit.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                    System.exit(0);
+                System.exit(0);
 
 
             }
         });
-       // spinnerSaved,spinnerRecent;
-       // Button buttonSave,buttonDelete;
-        buttonSave= (Button) findViewById(R.id.buttonSave);
+        // spinnerSaved,spinnerRecent;
+        buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonSave.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-           saveFolder();
+                saveFolder();
             }
         });
-        buttonDelete= (Button) findViewById(R.id.buttonDelete);
+        buttonDelete = (Button) findViewById(R.id.buttonDelete);
         buttonDelete.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -92,7 +95,23 @@ public class MainActivity extends ActionBarActivity {
                 deleteFolder();
             }
         });
+        spinnerSaved = (Spinner) findViewById(R.id.spinnerSaved);
+        spinnerSaved.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+                folderTextView2 = (TextView) findViewById(R.id.folderTextView2);
+                folderTextView2.setText(arg0.getItemAtPosition(arg2).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                Log.d(TAG, "onNothingSelected()");
+
+            }
+        });
+        loadFolders();
         // Get intent, action and MIME type
         Intent intent = getIntent();
         String action = intent.getAction();
@@ -101,19 +120,108 @@ public class MainActivity extends ActionBarActivity {
         if (Intent.ACTION_SEND.equals(action) && type != null) {
             if ("text/plain".equals(type)) {
                 handleSendText(intent); // Handle text being sent
-            }}  else {
+            }
+        } else {
             // Handle other intents, such as being started from the home screen
-        }}
+        }
+    }
+
+    private void loadFolders() {
+        Vector<String> str = null;
+        try {
+            str = new Vector<String>();
+            FileInputStream fstream = new FileInputStream("/data/data/com.thepriest.andrea.openfolder/files/savedFolders.txt");
+            BufferedReader in = new BufferedReader(new InputStreamReader(fstream));
+            String line = in.readLine();
+            int index = 0;
+            while (line != null) {
+
+                str.add(line);
+                line = in.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        ArrayAdapter adapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, str);
+
+        spinnerSaved.setAdapter(adapter);
+/*
+        try{
+            // Open the file that is the first
+            // command line parameter
+            FileInputStream fstream = new FileInputStream("savedFolders.txt");
+            // Get the object of DataInputStream
+            DataInputStream in = new DataInputStream(fstream);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                temp1 = line;
+                temp2 = line;
+
+            }
+
+            in.close();
+        }catch (Exception e){//Catch exception if any
+
+        }
+*/
+    }
 
     private void deleteFolder() {
+
     }
 
     private void saveFolder() {
+        String filename = "/data/data/com.thepriest.andrea.openfolder/files/savedFolders.txt";
+        String string = folderTextView2.getText().toString();
+        if (string.length()==0) return;
+        try {
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filename, true)));
+            out.println(string);
+            out.close();
+        } catch (IOException e) {
+            //exception handling left as an exercise for the reader
+        }
+/*
+        FileOutputStream outputStream;
+        try {
+            File file = new File(filename);
+//if file doesnt exists, then create it
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            //true = append file
+            FileWriter fileWritter = new FileWriter(file.getName(), true);
+            BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+            bufferWritter.write(string);
+            bufferWritter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+*/
+
+
+/*
+    try {
+            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+            final PrintStream printStream = new PrintStream(outputStream);
+            //outputStream.write(string.getBytes());
+            //outputStream.close();
+            printStream.print(string);
+            //printStream.append(string);
+            printStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+*/
+        loadFolders();
     }
 
     /**
-     *
-      * @param intent
+     * @param intent
      */
     void handleSendText(Intent intent) {
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
@@ -135,6 +243,7 @@ public class MainActivity extends ActionBarActivity {
 
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
