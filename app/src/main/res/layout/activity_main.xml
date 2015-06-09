@@ -109,7 +109,8 @@
                 android:id="@+id/spinnerSaved"
                 android:layout_weight="1"
                 android:minHeight="10dp"
-                android:theme="@style/BigSpinnerTheme"/>
+                android:theme="@style/BigSpinnerTheme"
+                />
 
             <LinearLayout
                 android:orientation="horizontal"

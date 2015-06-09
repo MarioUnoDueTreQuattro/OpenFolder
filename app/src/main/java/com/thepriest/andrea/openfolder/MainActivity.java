@@ -87,7 +87,6 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
-        // spinnerSaved,spinnerRecent;
         buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonSave.setOnClickListener(new View.OnClickListener() {
 
