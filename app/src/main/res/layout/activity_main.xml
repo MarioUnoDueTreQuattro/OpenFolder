@@ -104,11 +104,11 @@
                 android:textSize="@dimen/abc_text_size_large_material"/>
 
             <Spinner
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/spinnerSaved"
                 android:layout_weight="1"
-                />
+                android:minHeight="10dp"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -152,10 +152,11 @@
                 android:textSize="@dimen/abc_text_size_large_material"/>
 
             <Spinner
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/spinnerRecent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:minHeight="10dp"/>
 
             <Space
                 android:layout_width="20dp"

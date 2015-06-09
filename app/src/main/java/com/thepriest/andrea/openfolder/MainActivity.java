@@ -1,5 +1,6 @@
 package com.thepriest.andrea.openfolder;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,10 +18,13 @@ import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Vector;
 
@@ -38,6 +42,10 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+
         folderTextView2 = (TextView) findViewById(R.id.folderTextView2);
         buttonOpenFolder = (Button) findViewById(R.id.buttonOpenFolder);
         buttonOpenFolder.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +135,10 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    private boolean savedFoldersExists() {
+        return new File("/data/data/com.thepriest.andrea.openfolder/files/savedFolders.txt").exists();
+    }
+
     private void loadFolders() {
         Vector<String> str = null;
         try {
@@ -175,14 +187,14 @@ public class MainActivity extends ActionBarActivity {
         String string = folderTextView2.getText().toString();
         ArrayAdapter<String> dataAdapter;
         SpinnerAdapter spinAdapter = spinnerSaved.getAdapter();
-        dataAdapter= ((ArrayAdapter<String>) spinAdapter);
+        dataAdapter = ((ArrayAdapter<String>) spinAdapter);
         dataAdapter.remove(string);
         String filename = "/data/data/com.thepriest.andrea.openfolder/files/savedFolders.txt";
         string = folderTextView2.getText().toString();
         //if (string.length()==0) return;
         try {
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filename)));
-            for (int i=0; i< dataAdapter.getCount();i++) {
+            for (int i = 0; i < dataAdapter.getCount(); i++) {
                 out.println(dataAdapter.getItem(i));
             }
             out.close();
@@ -192,15 +204,26 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void saveFolder() {
+        boolean bExists = savedFoldersExists();
         String filename = "/data/data/com.thepriest.andrea.openfolder/files/savedFolders.txt";
         String string = folderTextView2.getText().toString();
-        if (string.length()==0) return;
+        if (string.length() == 0) return;
         try {
-            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filename, true)));
-            out.println(string);
-            out.close();
+            if (bExists) {
+                PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filename, true)));
+                out.println(string);
+                out.close();
+            } else {
+                //string+="\n";
+                FileOutputStream outputStream;
+                outputStream = openFileOutput("savedFolders.txt", Context.MODE_PRIVATE);
+                outputStream.write(string.getBytes());
+                outputStream.close();
+                //PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filename)));
+                //out.println(string);
+                //out.close();
+            }
         } catch (IOException e) {
-            //exception handling left as an exercise for the reader
         }
 /*
         FileOutputStream outputStream;
@@ -264,7 +287,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+       // getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

@@ -11,7 +11,8 @@
     <style name="ButtonTheme" parent="Theme.AppCompat">
 
     </style>
-    <style name="MyActionBar" parent="Theme.AppCompat.Light" >
+
+    <style name="MyActionBar" parent="Theme.AppCompat.Light">
         <!--<item name="android:background">#10101010</item>-->
     </style>
 
@@ -19,6 +20,11 @@
         <!--<item name="android:background">#ff101010</item>-->
         <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="BigSpinnerTheme" parent="Theme.AppCompat">
+        <!--<item name="android:background">#ff101010</item>-->
+        <item name="android:textSize">24sp</item>
     </style>
 
 </resources>
