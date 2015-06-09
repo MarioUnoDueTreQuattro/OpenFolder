@@ -140,6 +140,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void loadFolders() {
+        String sCurPath= folderTextView2.getText().toString();
         Vector<String> str = null;
         try {
             str = new Vector<String>();
@@ -161,6 +162,7 @@ public class MainActivity extends ActionBarActivity {
                 android.R.layout.simple_spinner_item, str);
 
         spinnerSaved.setAdapter(adapter);
+        folderTextView2.setText(sCurPath);
 /*
         try{
             // Open the file that is the first
