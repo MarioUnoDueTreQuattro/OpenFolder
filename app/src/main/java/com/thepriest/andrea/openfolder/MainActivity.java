@@ -24,7 +24,6 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Vector;
 
@@ -121,6 +120,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
         loadFolders();
+        loadRecentFolders();
         // Get intent, action and MIME type
         Intent intent = getIntent();
         String action = intent.getAction();
@@ -139,8 +139,12 @@ public class MainActivity extends ActionBarActivity {
         return new File("/data/data/com.thepriest.andrea.openfolder/files/savedFolders.txt").exists();
     }
 
+    private boolean recentFoldersExists() {
+        return new File("/data/data/com.thepriest.andrea.openfolder/files/savedFolders.txt").exists();
+    }
+
     private void loadFolders() {
-        String sCurPath= folderTextView2.getText().toString();
+        String sCurPath = folderTextView2.getText().toString();
         Vector<String> str = null;
         try {
             str = new Vector<String>();
@@ -183,6 +187,30 @@ public class MainActivity extends ActionBarActivity {
 
         }
 */
+    }
+
+    private void loadRecentFolders() {
+        // String sCurPath = folderTextView2.getText().toString();
+        Vector<String> str = null;
+        try {
+            str = new Vector<String>();
+            FileInputStream fstream = new FileInputStream("/data/data/com.thepriest.andrea.openfolder/files/recentFolders.txt");
+            BufferedReader in = new BufferedReader(new InputStreamReader(fstream));
+            String line = in.readLine();
+            int index = 0;
+            while (line != null) {
+
+                str.add(line);
+                line = in.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (str.isEmpty() == false) {
+            ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, str);
+            spinnerRecent.setAdapter(adapter);
+        }
+        // folderTextView2.setText(sCurPath);
     }
 
     private void deleteFolder() {
@@ -262,6 +290,32 @@ public class MainActivity extends ActionBarActivity {
         loadFolders();
     }
 
+    private void saveRecentFolder(String sharedText) {
+        boolean bExists = recentFoldersExists();
+        String filename = "/data/data/com.thepriest.andrea.openfolder/files/recentFolders.txt";
+        String string = sharedText;
+        if (string.length() == 0) return;
+        try {
+            if (bExists) {
+                PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filename, true)));
+                out.println(string);
+                out.close();
+            } else {
+                //string+="\n";
+                FileOutputStream outputStream;
+                outputStream = openFileOutput("recentFolders.txt", Context.MODE_PRIVATE);
+                outputStream.write(string.getBytes());
+                outputStream.close();
+                //PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filename)));
+                //out.println(string);
+                //out.close();
+            }
+        } catch (IOException e) {
+        }
+
+        //      loadFolders();
+    }
+
     /**
      * @param intent
      */
@@ -270,6 +324,7 @@ public class MainActivity extends ActionBarActivity {
         if (sharedText != null) {
             // Update UI to reflect text being shared
             folderTextView2.setText(sharedText);
+            saveRecentFolder(sharedText);
             intent = getPackageManager().getLaunchIntentForPackage("com.estrongs.android.pop");
             if (intent != null) {
     /* We found the activity now start the activity */
@@ -289,7 +344,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-       // getMenuInflater().inflate(R.menu.menu_main, menu);
+        // getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
