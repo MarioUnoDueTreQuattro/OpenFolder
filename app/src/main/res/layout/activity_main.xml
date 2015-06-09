@@ -108,7 +108,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/spinnerSaved"
                 android:layout_weight="1"
-                android:minHeight="10dp"/>
+                android:minHeight="10dp"
+                android:theme="@style/BigSpinnerTheme"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -156,7 +157,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/spinnerRecent"
                 android:layout_weight="1"
-                android:minHeight="10dp"/>
+                android:minHeight="10dp"
+                android:theme="@style/BigSpinnerTheme"/>
 
             <Space
                 android:layout_width="20dp"
