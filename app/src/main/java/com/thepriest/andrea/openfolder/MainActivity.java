@@ -4,13 +4,21 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import org.xmlpull.v1.XmlSerializer;
+
+import java.io.StringWriter;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -18,6 +26,8 @@ public class MainActivity extends ActionBarActivity {
     Button buttonOpenFolder;
     Button buttonExit;
     Button buttonClear;
+    Spinner spinnerSaved,spinnerRecent;
+    Button buttonSave,buttonDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +74,25 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
+       // spinnerSaved,spinnerRecent;
+       // Button buttonSave,buttonDelete;
+        buttonSave= (Button) findViewById(R.id.buttonSave);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+           saveFolder();
+            }
+        });
+        buttonDelete= (Button) findViewById(R.id.buttonDelete);
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                deleteFolder();
+            }
+        });
+
         // Get intent, action and MIME type
         Intent intent = getIntent();
         String action = intent.getAction();
@@ -75,6 +104,12 @@ public class MainActivity extends ActionBarActivity {
             }}  else {
             // Handle other intents, such as being started from the home screen
         }}
+
+    private void deleteFolder() {
+    }
+
+    private void saveFolder() {
+    }
 
     /**
      *
@@ -121,4 +156,35 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+/*
+    private String writeXml(List<Message> messages){
+        XmlSerializer serializer = Xml.newSerializer();
+        StringWriter writer = new StringWriter();
+        try {
+            serializer.setOutput(writer);
+            serializer.startDocument("UTF-8", true);
+            serializer.startTag("", "messages");
+            serializer.attribute("", "number", String.valueOf(messages.size()));
+            for (Message msg: messages){
+                serializer.startTag("", "message");
+                serializer.attribute("", "date", msg.getDate());
+                serializer.startTag("", "title");
+                serializer.text(msg.getTitle());
+                serializer.endTag("", "title");
+                serializer.startTag("", "url");
+                serializer.text(msg.getLink().toExternalForm());
+                serializer.endTag("", "url");
+                serializer.startTag("", "body");
+                serializer.text(msg.getDescription());
+                serializer.endTag("", "body");
+                serializer.endTag("", "message");
+            }
+            serializer.endTag("", "messages");
+            serializer.endDocument();
+            return writer.toString();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+*/
 }

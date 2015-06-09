@@ -106,7 +106,7 @@
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinner"
+                android:id="@+id/spinnerSaved"
                 android:layout_weight="1"
                 />
 
@@ -154,7 +154,7 @@
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinner2"
+                android:id="@+id/spinnerRecent"
                 android:layout_weight="1"/>
 
             <Space
