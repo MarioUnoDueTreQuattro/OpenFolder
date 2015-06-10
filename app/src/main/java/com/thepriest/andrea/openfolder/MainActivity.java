@@ -114,6 +114,16 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 */
+/*
+  spinnerSaved.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+          folderTextView2 = (TextView) findViewById(R.id.folderTextView2);
+          folderTextView2.setText(parent.getItemAtPosition(position).toString());
+
+      }
+  });
+*/
         spinnerSaved.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
