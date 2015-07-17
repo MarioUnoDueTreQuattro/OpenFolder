@@ -34,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
     TextView folderTextView2;
     Button buttonOpenFolder;
     Button buttonExit;
-    Button buttonClear;
+    Button buttonClear;//
     Spinner spinnerSaved, spinnerRecent;
     Button buttonSave, buttonDelete;
 
