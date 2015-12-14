@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -54,17 +55,22 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 //System.exit(0);
+                openFolder();
+/*
                 Intent intent = getPackageManager().getLaunchIntentForPackage("com.estrongs.android.pop");
                 if (intent != null) {
-    /* We found the activity now start the activity */
+    */
+/* We found the activity now start the activity *//*
+
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.setData(Uri.parse(folderTextView2.getText().toString()));
                     startActivity(intent);
+*/
                     System.exit(0);
-                } else {
-    /* Activity not found. */
+                /*} else {
+    *//* Activity not found. *//*
                 }
-
+*/
 
             }
         });
@@ -175,13 +181,14 @@ public class MainActivity extends ActionBarActivity {
     private View.OnTouchListener Spinner_OnTouch = new View.OnTouchListener() {
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_UP) {
-               //TODO
-                Log.d(TAG,"OnTouchListener");
-               this.onTouch(v, event);
+                //TODO
+                Log.d(TAG, "OnTouchListener");
+                this.onTouch(v, event);
             }
             return true;
         }
     };
+
     private boolean savedFoldersExists() {
         return new File("/data/data/com.thepriest.andrea.openfolder/files/savedFolders.txt").exists();
     }
@@ -209,7 +216,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
 
-        ArrayAdapter adapter = new ArrayAdapter(this,                android.R.layout.simple_spinner_item, str);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, str);
 
         spinnerSaved.setAdapter(adapter);
         folderTextView2.setText(sCurPath);
@@ -371,19 +378,39 @@ public class MainActivity extends ActionBarActivity {
             // Update UI to reflect text being shared
             folderTextView2.setText(sharedText);
             saveRecentFolder(sharedText);
+/*
             intent = getPackageManager().getLaunchIntentForPackage("com.estrongs.android.pop");
             if (intent != null) {
-    /* We found the activity now start the activity */
+    */
+/* We found the activity now start the activity *//*
+
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setData(Uri.parse(folderTextView2.getText().toString()));
                 startActivity(intent);
-                System.exit(0);
-            } else {
+*/
+            openFolder();
+            System.exit(0);
+
+        } else {
     /* Bring user to the market or let them choose an app? */
 
-            }
+        }
 
 
+    }
+
+
+    private void openFolder() {
+        Uri selectedUri = Uri.parse(  folderTextView2.getText().toString());
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        //Log.d(TAG,selectedUri.toString());
+        intent.setDataAndType(selectedUri, "resource/folder");
+
+        if (intent.resolveActivityInfo(getPackageManager(), 0) != null) {
+            startActivity(intent);
+        } else {
+            // if you reach this place, it means there is no any file
+            // explorer app installed on your device
         }
     }
 
