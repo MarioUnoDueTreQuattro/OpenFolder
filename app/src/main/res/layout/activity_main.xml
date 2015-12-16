@@ -22,7 +22,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="This app can open folders in &quot;ES File Explorer&quot; via &quot;Share&quot;, you can share text containing folder paths."
+                android:text="This app can open folders in file managers via &quot;Share&quot;, you can share text containing folder paths."
                 android:id="@+id/textView"
     />
 
