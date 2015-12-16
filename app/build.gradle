@@ -9,14 +9,14 @@ android {
             storePassword 'ApdIW8'
         }
     }
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion "22.0.1"
     defaultConfig {
         applicationId "com.thepriest.andrea.openfolder"
         minSdkVersion 16
-        targetSdkVersion 22
-        versionName '1.16'
-        versionCode 116
+        targetSdkVersion 23
+        versionName '1.17'
+        versionCode 117
     }
     buildTypes {
         debug {
@@ -33,5 +33,5 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.android.support:appcompat-v7:23.1.1'
 }
