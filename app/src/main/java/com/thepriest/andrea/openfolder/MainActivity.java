@@ -377,7 +377,7 @@ public class MainActivity extends ActionBarActivity {
         if (sharedText != null) {
             // Update UI to reflect text being shared
             folderTextView2.setText(sharedText);
-            saveRecentFolder(sharedText);
+            //saveRecentFolder(sharedText);
 /*
             intent = getPackageManager().getLaunchIntentForPackage("com.estrongs.android.pop");
             if (intent != null) {
@@ -389,7 +389,7 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(intent);
 */
             openFolder();
-            System.exit(0);
+            //System.exit(0);
 
         } else {
     /* Bring user to the market or let them choose an app? */
