@@ -401,7 +401,8 @@ public class MainActivity extends ActionBarActivity {
 
 
     private void openFolder() {
-        Uri selectedUri = Uri.parse(  folderTextView2.getText().toString());
+        String sPath=folderTextView2.getText().toString();
+        Uri selectedUri = Uri.parse( sPath.toString());
         Intent intent = new Intent(Intent.ACTION_VIEW);
         //Log.d(TAG,selectedUri.toString());
         intent.setDataAndType(selectedUri, "resource/folder");
@@ -412,6 +413,8 @@ public class MainActivity extends ActionBarActivity {
             // if you reach this place, it means there is no any file
             // explorer app installed on your device
         }
+        saveRecentFolder(sPath);
+
     }
 
     @Override
