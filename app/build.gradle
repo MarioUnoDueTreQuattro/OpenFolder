@@ -15,8 +15,8 @@ android {
         applicationId "com.thepriest.andrea.openfolder"
         minSdkVersion 16
         targetSdkVersion 24
-        versionName '1.18'
-        versionCode 118
+        versionName '1.19'
+        versionCode 119
     }
     buildTypes {
         debug {
