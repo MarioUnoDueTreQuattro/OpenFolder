@@ -4,9 +4,9 @@ android {
     signingConfigs {
         config {
             keyAlias 'keyalias'
-            keyPassword 'sbagliati'
+            keyPassword 'ApdIW8'
             storeFile file('C:/Program Files/Java/jdk1.7.0_51/jre/keystoreOpenFolder2')
-            storePassword 'ApdIW8'
+            storePassword 'sbagliati'
         }
     }
     compileSdkVersion 24
